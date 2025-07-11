@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AAA & Associates LLC - Construction & Technical Contracting</title>
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: #ffffff;
+            color: #4a5568;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-bottom: 2px solid #f7fafc;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #4a5568;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #5fb3d4;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #4a5568;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu .nav-links {
+            flex-direction: column;
+            gap: 1rem;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(45, 55, 72, 0.8), rgba(95, 179, 212, 0.7)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23f7fafc;stop-opacity:1" /><stop offset="100%" style="stop-color:%23edf2f7;stop-opacity:1" /></linearGradient></defs><rect width="1200" height="800" fill="url(%23bg)"/><g opacity="0.1"><path d="M0,200 Q300,100 600,200 T1200,200 L1200,0 L0,0 Z" fill="%235fb3d4"/><path d="M0,400 Q300,300 600,400 T1200,400 L1200,200 L0,200 Z" fill="%23e53e3e"/><path d="M0,600 Q300,500 600,600 T1200,600 L1200,400 L0,400 Z" fill="%234a5568"/></g></svg>');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            padding: 120px 0;
+            text-align: center;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(95, 179, 212, 0.1) 0%, rgba(229, 62, 62, 0.1) 100%);
+            z-index: 0;
+        }
+
+        .hero > .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: white;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            color: #5fb3d4;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #e53e3e;
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
+        }
+
+        .cta-button:hover {
+            background: #c53030;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(229, 62, 62, 0.4);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2d3748;
+            position: relative;
+            font-weight: 800;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #5fb3d4, #e53e3e);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about {
+            background: white;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .about-text p {
+            margin-bottom: 2rem;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: #f7fafc;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            border-color: #5fb3d4;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #e53e3e;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Services Section */
+        .services {
+            background: #f7fafc;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #5fb3d4, #4a90a4);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+            font-weight: 700;
+        }
+
+        /* Projects Section */
+        .projects {
+            background: white;
+        }
+
+        .project-slider {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .slider-container {
+            display: flex;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            position: relative;
+            height: 500px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: end;
+        }
+
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            padding: 3rem;
+            width: 100%;
+        }
+
+        .slide-content h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .slide-location {
+            color: #5fb3d4;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .slide-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #2d3748;
+            transition: all 0.3s ease;
+            z-index: 3;
+        }
+
+        .slider-nav:hover {
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .slider-prev {
+            left: 20px;
+        }
+
+        .slider-next {
+            right: 20px;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 3;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: #5fb3d4;
+            transform: scale(1.2);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: #2d3748;
+            color: white;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-form {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #5fb3d4;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: #e53e3e;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #c53030;
+        }
+
+        .submit-btn:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+        .contact-info h3 {
+            color: #5fb3d4;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .contact-item {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: #5fb3d4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .map-container {
+            margin-top: 2rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+        }
+
+        /* Footer */
+        footer {
+            background: #0f1419;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-logo {
+            font-size: 1.2rem;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-text {
+            color: #999;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: #48bb78;
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .error-message {
+            background: #e53e3e;
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo {
+                height: 50px;
+            }
+
+            .slider-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .slider-prev {
+                left: 10px;
+            }
+
+            .slider-next {
+                right: 10px;
+            }
+
+            .slide-content {
+                padding: 2rem;
+            }
+
+            .slide-content h3 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <img src="logo.png" alt="AAA & Associates LLC" class="logo">
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">☰</button>
+        </nav>
+        <div class="mobile-menu">
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>AAA & Associates LLC</h1>
+            <p class="hero-subtitle">Construction | Fit-Out | Maintenance | Manpower Solutions</p>
+            <p class="hero-description">
+                Operating in the UAE for over 20 years, AAA & Associates LLC has been a trusted name in technical contracting, delivering excellence across Dubai, Sharjah, and beyond.
+            </p>
+            <a href="#contact" class="cta-button">Get In Touch</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Established in 1998, AAA & Associates LLC has delivered multi-disciplinary contracting, electromechanical, civil engineering, and maintenance services for more than two decades. As part of the prestigious HK Group, we have built a solid reputation for quality, integrity, and on-time execution.</p>
+                    
+                    <p>Our comprehensive approach to project management and technical expertise has made us a preferred partner for clients across the UAE. From small-scale fit-outs to large construction projects, we bring the same level of dedication and professional excellence to every engagement.</p>
+                    
+                    <p>Throughout our journey, we have consistently adapted to industry changes while maintaining our core values of reliability, quality craftsmanship, and customer satisfaction. Our experienced team combines traditional construction wisdom with modern techniques to deliver outstanding results.</p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label">Years of Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1998</div>
+                        <div class="stat-label">Established</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">AED 30m+</div>
+                        <div class="stat-label">Revenue</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">What We Do</h2>
+            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 3rem; color: #666;">
+                We have successfully completed turnkey and subcontract works across various sectors, delivering comprehensive solutions tailored to our clients' needs.
+            </p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🏗️</div>
+                    <h3>General Construction</h3>
+                    <p>Complete construction services for villas, warehouses, and commercial buildings. From foundation to finishing, we handle every aspect of your construction project with precision and expertise.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🏢</div>
+                    <h3>Interior Fit-Outs</h3>
+                    <p>Professional interior solutions for offices, restaurants, and retail spaces. We transform spaces into functional and aesthetically pleasing environments that reflect your brand and vision.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>Civil & MEP Works</h3>
+                    <p>Comprehensive civil engineering and MEP services including structural work, flooring, plumbing, and electrical systems. We ensure all installations meet international standards and regulations.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>General Maintenance</h3>
+                    <p>Reliable facility maintenance services including repairs, upgrades, and preventive maintenance. We keep your properties in optimal condition with minimal downtime.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🏗️</div>
+                    <h3>Gypsum & False Ceiling</h3>
+                    <p>Expert installation of gypsum ceilings and sophisticated false ceiling systems for educational facilities and commercial spaces. Our skilled technicians ensure perfect finishes and structural integrity.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">👷</div>
+                    <h3>Manpower Solutions</h3>
+                    <p>Skilled labor and technical manpower for project support. Our qualified workforce ensures your projects are completed efficiently and to the highest standards.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Our Projects</h2>
+            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 3rem; color: #666;">
+                A showcase of our completed projects across Dubai, Sharjah, and surrounding areas.
+            </p>
+            <div class="project-slider">
+                <div class="slider-container" id="sliderContainer">
+                    <!-- Hotel Room Project -->
+                    <div class="slide" style="background-image: url('project1.jpg');">
+                        <div class="slide-overlay"></div>
+                        <div class="slide-content">
+                            <h3>Hotel Renovation</h3>
+                            <p class="slide-location">Al Satwa, Dubai</p>
+                            <p class="slide-description">Complete nightclub fit-out and renovation featuring state-of-the-art lighting systems, premium sound engineering, and contemporary interior design for an unforgettable entertainment experience.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Restaurant Project -->
+                    <div class="slide" style="background-image: url('project2.jpg');">
+                        <div class="slide-overlay"></div>
+                        <div class="slide-content">
+                            <h3>Restaurant Fit-Out</h3>
+                            <p class="slide-location">Downtown Dubai</p>
+                            <p class="slide-description">Elegant restaurant interior featuring custom woodwork, sophisticated lighting design, and premium finishes that create an exceptional dining atmosphere in Dubai's premier business district.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Nightclub Project -->
+                    <div class="slide" style="background-image: url('project3.jpg');">
+                        <div class="slide-overlay"></div>
+                        <div class="slide-content">
+                            <h3>Entertainment Venue</h3>
+                            <p class="slide-location">Al Karama</p>
+                            <p class="slide-description">High-end nightclub design with dynamic LED flooring, premium acoustic systems, and cutting-edge architectural elements creating an immersive entertainment environment.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Accommodation Project -->
+                    <div class="slide" style="background-image: url('project4.jpg');">
+                        <div class="slide-overlay"></div>
+                        <div class="slide-content">
+                            <h3>Labour Accommodation</h3>
+                            <p class="slide-location">Sharjah and Sonapur</p>
+                            <p class="slide-description">Modern worker accommodation facilities designed for comfort and compliance, featuring efficient layouts, quality amenities, and sustainable construction practices.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- School Project -->
+                    <div class="slide" style="background-image: url('project5.jpg');">
+                        <div class="slide-overlay"></div>
+                        <div class="slide-content">
+                            <h3>Educational Facility - Gypsum Ceiling</h3>
+                            <p class="slide-location">Dubai</p>
+                            <p class="slide-description">Professional installation of gypsum and false ceiling systems in educational facilities, providing excellent acoustics, climate control, and modern aesthetics for optimal learning environments.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Commercial Building -->
+                    <div class="slide" style="background-image: url('project6.jpg');">
+                        <div class="slide-overlay"></div>
+                        <div class="slide-content">
+                            <h3>G+2 Commercial & Residential</h3>
+                            <p class="slide-location">Sharjah</p>
+                            <p class="slide-description">Mixed-use development combining commercial and residential spaces with modern architectural design, featuring quality construction and contemporary amenities for urban living.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="slider-nav slider-prev" onclick="previousSlide()">‹</button>
+                <button class="slider-nav slider-next" onclick="nextSlide()">›</button>
+                
+                <div class="slider-dots">
+                    <span class="dot active" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                    <span class="dot" onclick="currentSlide(4)"></span>
+                    <span class="dot" onclick="currentSlide(5)"></span>
+                    <span class="dot" onclick="currentSlide(6)"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Contact Us</h2>
+            <div class="contact-content">
+                <div class="contact-form">
+                    <h3>Send us a message</h3>
+                    <div class="success-message" id="successMessage">
+                        Thank you for your message! We'll get back to you soon.
+                    </div>
+                    <div class="error-message" id="errorMessage">
+                        Please fill in all required fields.
+                    </div>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div>
+                            <strong>Office Address</strong><br>
+                            Office #119, Mezzanine floor<br>
+                            Al Makhawi Building, Oud Metha<br>
+                            Dubai, United Arab Emirates
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div>
+                            <strong>Phone</strong><br>
+                            <a href="tel:+97145284119" style="color: #5fb3d4;">+971 4 528 4119</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">🗺️</div>
+                        <div>
+                            <strong>Location</strong><br>
+                            <a href="https://maps.app.goo.gl/htf7WjWDn5NdjFg6A?g_st=ipc" target="_blank" style="color: #5fb3d4;">View on Google Maps</a>
+                        </div>
+                    </div>
+                    <div class="map-container">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.7789589465346!2d55.31471431501398!3d25.230853483890686!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xa92c23e9938d9cef!2sOud%20Metha%2C%20Dubai%20-%20United%20Arab%20Emirates!5e0!3m2!1sen!2sae!4v1642176543456!5m2!1sen!2sae"
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">AAA & Associates LLC</div>
+                <div class="footer-text">
+                    © 2025 AAA & Associates LLC. All rights reserved. | Part of HK Group
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize EmailJS
+        (function(){
+            emailjs.init("BEY1222R_EfTHeLVd"); // Replace with your actual public key
+        })();
+
+        let currentSlideIndex = 0;
+        const totalSlides = 6;
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.querySelector('.mobile-menu');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    document.querySelector('.mobile-menu').classList.remove('active');
+                }
+            });
+        });
+
+        // Slider functionality
+        function showSlide(index) {
+            const slider = document.getElementById('sliderContainer');
+            const dots = document.querySelectorAll('.dot');
+            
+            if (index >= totalSlides) currentSlideIndex = 0;
+            if (index < 0) currentSlideIndex = totalSlides - 1;
+            
+            slider.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+            
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlideIndex++;
+            showSlide(currentSlideIndex);
+        }
+
+        function previousSlide() {
+            currentSlideIndex--;
+            showSlide(currentSlideIndex);
+        }
+
+        function currentSlide(index) {
+            currentSlideIndex = index - 1;
+            showSlide(currentSlideIndex);
+        }
+
+        // Auto-advance slider
+        setInterval(nextSlide, 5000);
+
+        // Contact form handling with EmailJS integration
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const subject = document.getElementById('subject').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Hide any existing messages
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            // Basic validation
+            if (!name || !email || !subject || !message) {
+                errorMessage.textContent = 'Please fill in all required fields.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                errorMessage.textContent = 'Please enter a valid email address.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            
+            // Disable submit button and show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            // EmailJS integration
+            const templateParams = {
+                from_name: name,
+                from_email: email,
+                subject: subject,
+                message: message,
+                to_email: 'arjun@aaaassociates.ae' // Replace with your actual email
+            };
+            
+            emailjs.send('service_1m02r8n', 'template_3w08gqv', templateParams)
+                .then(function(response) {
+                    console.log('Email sent successfully:', response);
+                    successMessage.style.display = 'block';
+                    document.getElementById('contactForm').reset();
+                    
+                    // Re-enable submit button
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Message';
+                })
+                .catch(function(error) {
+                    console.error('Email sending failed:', error);
+                    errorMessage.textContent = 'Failed to send message. Please try again or contact us directly.';
+                    errorMessage.style.display = 'block';
+                    
+                    // Re-enable submit button
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Message';
+                });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.backgroundColor = '#ffffff';
+                header.style.backdropFilter = 'none';
+            }
+        });
+
+        // Animate stats on scroll
+        function animateStats() {
+            const stats = document.querySelectorAll('.stat-number');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const finalValue = target.textContent;
+                        
+                        // Only animate numbers
+                        if (finalValue.includes('+') || !isNaN(finalValue)) {
+                            const numericValue = parseInt(finalValue.replace(/[^0-9]/g, ''));
+                            if (numericValue) {
+                                animateValue(target, 0, numericValue, 2000, finalValue);
+                            }
+                        }
+                        observer.unobserve(target);
+                    }
+                });
+            });
+            
+            stats.forEach(stat => observer.observe(stat));
+        }
+
+        function animateValue(element, start, end, duration, originalText) {
+            const startTime = performance.now();
+            
+            function updateValue(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const current = Math.floor(start + (end - start) * progress);
+                
+                // Preserve the original format
+                if (originalText.includes('+')) {
+                    element.textContent = current + '+';
+                } else if (originalText.includes('AED')) {
+                    element.textContent = 'AED ' + current + 'm+';
+                } else {
+                    element.textContent = current;
+                }
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateValue);
+                } else {
+                    element.textContent = originalText; // Ensure final value is exact
+                }
+            }
+            
+            requestAnimationFrame(updateValue);
+        }
+
+        // Initialize animations when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            animateStats();
+        });
+    </script>
+</body>
+</html>
