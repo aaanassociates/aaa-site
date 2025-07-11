@@ -114,10 +114,11 @@
         }
 
         .mobile-menu .nav-links {
-            flex-direction: column;
-            gap: 0;
-            padding: 0;
-        }
+    display: flex !important; /* Force display even when parent .nav-links is hidden */
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 2rem;
+}
 
         .mobile-menu .nav-links li {
             border-bottom: 1px solid #e2e8f0;
@@ -605,14 +606,19 @@
         }
 
         /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
 
-            .mobile-menu-toggle {
-                display: block;
-            }
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    /* Ensure mobile menu nav-links are visible when menu is active */
+    .mobile-menu.active .nav-links {
+        display: flex !important;
+    }
 
             .hero h1 {
                 font-size: 2.5rem;
